@@ -1,0 +1,38 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/student_manage
+    username: root
+    password: '!!!Zpc20100709'
+  servlet:
+    multipart:
+      max-file-size: 1024MB
+      max-request-size: 1024MB
+  graphql:
+    cors:
+      allowed-origins: '*'
+
+
+
+logging:
+  config: classpath:logback-spring.xml
+  level:
+    com:
+      zhangpy:
+        springLearn:
+    .controller: trace
+
+mybatis:
+  type-aliases-package: com.zhangpy.studentmanage.bean
+  configuration:
+    map-underscore-to-camel-case: true  # 开启驼峰命名匹配
+  mapper-locations:
+    - classpath:mapper/*.xml
+
+springdoc:
+  packages-to-scan: com.zhangpy.studentmanage.controller
+  swagger-ui:
+    path: /swagger-ui.html

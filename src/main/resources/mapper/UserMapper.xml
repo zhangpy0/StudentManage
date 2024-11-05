@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zhangpy.studentmanage.dao.UserMapper">
+    <insert id="addUser" parameterType="String">
+        INSERT INTO user(username, password)
+        SELECT #{username}, #{password}
+        WHERE NOT EXISTS (
+            SELECT 1 FROM user
+            WHERE username = #{username}
+        );
+    </insert>
+
+    <delete id="deleteUser" parameterType="com.zhangpy.studentmanage.bean.User">
+        delete from user where id=#{id}
+    </delete>
+
+    <update id="updateUser" parameterType="com.zhangpy.studentmanage.bean.User">
+        update user set password=#{password} where username=#{username}
+    </update>
+
+    <select id="getPassword" resultType="String" parameterType="String">
+        select password from user where username=#{username}
+    </select>
+
+    <select id="getUserByNameAndPassword" resultType="com.zhangpy.studentmanage.bean.User" parameterType="String">
+        select * from user where username=#{username} and password=#{password}
+    </select>
+
+    <select id="getUserByName" resultType="com.zhangpy.studentmanage.bean.User" parameterType="String">
+        select * from user where username=#{username}
+    </select>
+</mapper>
